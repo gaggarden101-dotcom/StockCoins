@@ -7,9 +7,16 @@ import os
 import math
 import asyncio
 
+# --- NEW: Import Replit Database client ---
+from replit import db 
+
 # --- Configuration ---
-# Your bot token will be read from Replit Secrets (environment variable)
-TOKEN = os.environ.get('DISCORD_BOT_TOKEN') 
+# Your bot token will be read from Replit Database for public Repls
+TOKEN = db["DISCORD_BOT_TOKEN"] if "DISCORD_BOT_TOKEN" in db else None
+if TOKEN is None:
+    print("ERROR: DISCORD_BOT_TOKEN not found in Replit Database. Bot cannot start.")
+    exit()
+
 PREFIX = '!' # While not used for slash commands, kept for potential future prefix commands
 
 # List of your cryptocurrencies - currently only Campton Coin
